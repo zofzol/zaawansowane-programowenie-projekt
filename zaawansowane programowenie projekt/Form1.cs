@@ -23,7 +23,7 @@ namespace zaawansowane_programowenie_projekt
         {
             if (!int.TryParse(txtRows.Text, out int m) || !int.TryParse(txtCols.Text, out int n) || !int.TryParse(txtErrors.Text, out int errors))
             {
-                MessageBox.Show("Podaj poprawne liczby!");
+                MessageBox.Show("Podaj wartoœæ liczbow¹!");
                 return;
             }
 
@@ -71,8 +71,12 @@ namespace zaawansowane_programowenie_projekt
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
+          
                 foreach (DataGridViewCell cell in row.Cells)
                 {
+                    if (cell.Value == null)
+                        continue;
+
                     if ((int)cell.Value == 1)
                         cell.Style.BackColor = Color.LightPink;
                     else
@@ -98,10 +102,28 @@ namespace zaawansowane_programowenie_projekt
             }
 
             // zmiana koloru
-            if (val == 1)
-                cell.Style.BackColor = Color.LightPink;
+            ColorCells();
+        }
+
+        private void CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            if (cell.Value == null)
+                cell.Value = 0;
+
+            int val = (int)cell.Value;
+
+            // zmiana wartosci
+            if (val == 0)
+                val = 1;
             else
-                cell.Style.BackColor = ColorTranslator.FromHtml("#d3e171");
+                val = 0;
+
+            cell.Value = val;
+
+            // zmiana koloru
+            //ColorCells();
         }
     }
 }
