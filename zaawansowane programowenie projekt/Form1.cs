@@ -11,7 +11,7 @@ namespace zaawansowane_programowenie_projekt
         {
             txtRows.Text = "5";
             txtCols.Text = "5";
-            txtErrors.Text = "3";
+            txtErrors.Text = "0";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -48,6 +48,7 @@ namespace zaawansowane_programowenie_projekt
                 }
             }
             SetSquareCells(30);
+            ColorCells();
 
         }
 
@@ -62,10 +63,45 @@ namespace zaawansowane_programowenie_projekt
             {
                 row.Height = size;
             }
+            //wysrodekowanie cyferek
+            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
+        private void ColorCells()
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if ((int)cell.Value == 1)
+                        cell.Style.BackColor = Color.LightPink;
+                    else
+                        cell.Style.BackColor = ColorTranslator.FromHtml("#d3e171");
+
+                    //cell.Value = ""; 
+                }
+            }
         }
         private void Form1_Resize(object sender, EventArgs e)
         {
 
+        }
+
+        private void CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            if (cell.Value == null || !int.TryParse(cell.Value.ToString(), out int val) || (val != 0 && val != 1))
+            {
+                cell.Value = 0;
+                val = 0;
+            }
+
+            // zmiana koloru
+            if (val == 1)
+                cell.Style.BackColor = Color.LightPink;
+            else
+                cell.Style.BackColor = ColorTranslator.FromHtml("#d3e171");
         }
     }
 }
