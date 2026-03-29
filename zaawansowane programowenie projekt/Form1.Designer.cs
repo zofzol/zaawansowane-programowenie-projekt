@@ -90,12 +90,14 @@
             // 
             // btnGenerate
             // 
+            btnGenerate.AutoEllipsis = true;
+            btnGenerate.BackColor = Color.FromArgb(255, 192, 255);
             btnGenerate.Location = new Point(47, 395);
             btnGenerate.Name = "btnGenerate";
             btnGenerate.Size = new Size(176, 99);
             btnGenerate.TabIndex = 6;
             btnGenerate.Text = "GENERATE";
-            btnGenerate.UseVisualStyleBackColor = true;
+            btnGenerate.UseVisualStyleBackColor = false;
             btnGenerate.Click += btnGenerate_Click;
             // 
             // dataGridView1
@@ -104,13 +106,16 @@
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.BackgroundColor = SystemColors.Control;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.ColumnHeadersVisible = false;
-            dataGridView1.Location = new Point(392, 27);
+            dataGridView1.GridColor = Color.White;
+            dataGridView1.Location = new Point(310, 0);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 34;
-            dataGridView1.Size = new Size(605, 467);
+            dataGridView1.Size = new Size(710, 520);
             dataGridView1.TabIndex = 7;
             dataGridView1.CellClick += CellClick;
             dataGridView1.CellValueChanged += CellValueChanged;
