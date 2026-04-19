@@ -1,14 +1,26 @@
+using System.ComponentModel;
+
 namespace zaawansowane_programowenie_projekt
 {
     public partial class Form1 : Form
     {
+
+        private BackgroundWorker bw = new BackgroundWorker();
         public Form1()
         {
             InitializeComponent();
 
+            bw.WorkerReportsProgress = true;
+            bw.WorkerSupportsCancellation = true;
+
+            bw.DoWork += Bw_DoWork;
+            bw.ProgressChanged += Bw_ProgressChanged;
+            bw.RunWorkerCompleted += Bw_RunWorkerCompleted;
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            bw.WorkerReportsProgress = true;
             txtRows.Text = "5";
             txtCols.Text = "5";
             txtErrors.Text = "0";
@@ -20,7 +32,39 @@ namespace zaawansowane_programowenie_projekt
 
 
         }
+        private void Bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var args = (object[])e.Argument;
 
+            int[,] matrix = (int[,])args[0];
+            int iterations = (int)args[1];
+            int tabuLength = (int)args[2];
+            int neighborhood = (int)args[3];
+            int seed = (int)args[4];
+            int maxTime = (int)args[5];
+
+            var tabu = new TabuSearch();
+
+            var result = tabu.Run(matrix, iterations, tabuLength, neighborhood, seed, maxTime, (BackgroundWorker)sender);
+
+            e.Result = result;
+        }
+
+        private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+            lblStatus.Text = e.ProgressPercentage + "%";
+        }
+        private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            var result = (Solution)e.Result;
+
+            int[,] matrix = GetMatrixFromGrid();
+
+            ShowSolution(result, matrix);
+
+            tabControl1.SelectedTab = tabPage3;
+        }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -171,7 +215,7 @@ namespace zaawansowane_programowenie_projekt
 
         }
 
-            private async void btnCompute_Click(object sender, EventArgs e)
+        private void btnCompute_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(txtIterations.Text, out int iterations) ||
                 !int.TryParse(txtTabuLength.Text, out int tabuLength) ||
@@ -183,18 +227,9 @@ namespace zaawansowane_programowenie_projekt
                 return;
             }
 
-
-
             int[,] matrix = GetMatrixFromGrid();
 
-            var tabu = new TabuSearch();
-
-            var result = await Task.Run(() =>
-                tabu.Run(matrix, iterations, tabuLength, neighborhood, seed, maxTime)
-            );
-
-            ShowSolution(result, matrix);
-            tabControl1.SelectedTab = tabPage3;
+            bw.RunWorkerAsync(new object[] { matrix, iterations, tabuLength, neighborhood, seed, maxTime });
         }
     }
 }

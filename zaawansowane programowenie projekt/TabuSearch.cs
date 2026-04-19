@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,36 @@ namespace zaawansowane_programowenie_projekt
 {
     public class TabuSearch
     {
+        private int EvaluateHeuristic(int[,] matrix, int[] permutation)
+        {
+            int m = matrix.GetLength(0);
+            int n = matrix.GetLength(1);
+            int totalScore = 0;
+
+            for (int r = 0; r < m; r++)
+            {
+                int first = -1;
+                int last = -1;
+                int count = 0;
+
+                for (int c = 0; c < n; c++)
+                {
+                    if (matrix[r, permutation[c]] == 1)
+                    {
+                        if (first == -1) first = c;
+                        last = c;
+                        count++;
+                    }
+                }
+
+                if (count > 0)
+                {
+                    int holes = (last - first + 1) - count;
+                    totalScore += holes;
+                }
+            }
+            return totalScore;
+        }
         private int Evaluate(int[,] matrix, int[] permutation) 
         {
             int m = matrix.GetLength(0);
@@ -69,10 +100,17 @@ namespace zaawansowane_programowenie_projekt
             return totalErrors;
         }
 
-        private int[] RandomPermutation(int n)
+        private int[] RandomPermutation(int n, Random rand)
         {
-            Random rand = new Random();
-            return Enumerable.Range(0, n).OrderBy(x => rand.Next()).ToArray();
+            int[] perm = Enumerable.Range(0, n).ToArray();
+
+            for (int i = n - 1; i > 0; i--)
+            {
+                int j = rand.Next(i + 1);
+                (perm[i], perm[j]) = (perm[j], perm[i]);
+            }
+
+            return perm;
         }
 
         private int[] Swap(int[] perm, int i, int j)
@@ -82,23 +120,68 @@ namespace zaawansowane_programowenie_projekt
             return newPerm;
         }
 
-        public Solution Run(int[,] matrix, int iterations, int tabuLength, int neighborhood, int seed, int maxTime)
+        public Solution Run(int[,] matrix, int iterations, int tabuLength, int neighborhood, int seed, int maxTime, BackgroundWorker bw)
         {
             int n = matrix.GetLength(1);
-            Random rand = new Random();
+            Random rand = new Random(seed);
 
-            int[] current = RandomPermutation(n); 
+            int[] current = RandomPermutation(n, rand); //zmienna przechowujaca aktualny uklad kolumn
             int currentCost = Evaluate(matrix, current);
 
             int[] bestSolution = (int[])current.Clone();
             int bestCost = currentCost;
 
+            Queue<(int, int)> tabuQueue = new Queue<(int, int)>();//lista indeksow do zmiany
 
+            for (int iter = 0; iter < iterations; iter++)//dla iterations ilosci swapujemy
+            {
+                int progress = (int)((iter / (double)iterations) * 100);
+                bw.ReportProgress(progress);
+                int bestMoveCost = int.MaxValue; //najmniejsza wartosc dla danej iteracji
+                (int, int) bestMove = (-1, -1); //kolumny do zamiany z najmniejszym bierzacym kosztem
+                int[]? nextBestPerm = null; //uklad kolumn po zamianie bestMove
+
+                for (int k = 0; k < neighborhood; k++)
+                {
+                    int i = rand.Next(n); 
+                    int j = rand.Next(n);
+                    if (i == j) continue;
+                    var move = (Math.Min(i, j), Math.Max(i, j));
+
+
+                    int[] candidate = Swap(current, i, j);
+                    int candidateCost = EvaluateHeuristic(matrix, candidate);
+                    bool isTabu = tabuQueue.Contains(move);
+
+                    if (candidateCost < bestMoveCost && (!isTabu || candidateCost < bestCost))
+                    {
+                        bestMoveCost = candidateCost;
+                        bestMove = move;
+                        nextBestPerm = candidate;
+                    }
+                }
+
+                if (nextBestPerm != null)
+                {
+                    current = nextBestPerm;
+                    currentCost = Evaluate(matrix, current);
+
+
+                    tabuQueue.Enqueue(bestMove);
+                    if (tabuQueue.Count > tabuLength) tabuQueue.Dequeue();
+
+                    if (currentCost < bestCost)
+                    {
+                        bestCost = currentCost;
+                        bestSolution = (int[])current.Clone();
+                    }
+                }
+            }
 
             return new Solution
             {
                 Permutation = bestSolution,
-                Cost = bestCost
+                Cost = Evaluate(matrix, bestSolution)
             };
         }
 

@@ -51,10 +51,13 @@
             label5 = new Label();
             label4 = new Label();
             tabPage3 = new TabPage();
+            progressBar1 = new ProgressBar();
+            lblStatus = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
+            tabPage3.SuspendLayout();
             SuspendLayout();
             // 
             // txtRows
@@ -286,12 +289,29 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(lblStatus);
+            tabPage3.Controls.Add(progressBar1);
             tabPage3.Location = new Point(4, 34);
             tabPage3.Name = "tabPage3";
             tabPage3.Size = new Size(1016, 487);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Solution";
             tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // progressBar1
+            // 
+            progressBar1.Location = new Point(15, 29);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(404, 34);
+            progressBar1.TabIndex = 0;
+            // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.Location = new Point(425, 38);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(0, 25);
+            lblStatus.TabIndex = 1;
             // 
             // Form1
             // 
@@ -309,6 +329,8 @@
             tabPage1.PerformLayout();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
+            tabPage3.ResumeLayout(false);
+            tabPage3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -337,5 +359,7 @@
         private TextBox txtSeed;
         private TextBox txtTime;
         private TextBox txtIterations;
+        private Label lblStatus;
+        private ProgressBar progressBar1;
     }
 }
