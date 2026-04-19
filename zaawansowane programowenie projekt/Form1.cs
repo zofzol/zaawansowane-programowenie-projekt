@@ -12,6 +12,13 @@ namespace zaawansowane_programowenie_projekt
             txtRows.Text = "5";
             txtCols.Text = "5";
             txtErrors.Text = "0";
+            txtIterations.Text = "1000";
+            txtTabuLength.Text = "15";
+            txtNeighborhood.Text = "50"; 
+            txtTime.Text = "30";   
+            txtSeed.Text = "2137"; 
+
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -71,7 +78,7 @@ namespace zaawansowane_programowenie_projekt
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-          
+
                 foreach (DataGridViewCell cell in row.Cells)
                 {
                     if (cell.Value == null)
@@ -124,6 +131,70 @@ namespace zaawansowane_programowenie_projekt
 
             // zmiana koloru
             //ColorCells();
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtErrors_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+        private int[,] GetMatrixFromGrid()
+        {
+            int rows = dataGridView1.RowCount;
+            int cols = dataGridView1.ColumnCount;
+
+            int[,] matrix = new int[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    matrix[i, j] = Convert.ToInt32(dataGridView1[j, i].Value);
+
+            return matrix;
+        }
+
+        private void ShowSolution(Solution sol, int[,] matrix)
+        { 
+
+        }
+
+            private async void btnCompute_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(txtIterations.Text, out int iterations) ||
+                !int.TryParse(txtTabuLength.Text, out int tabuLength) ||
+                !int.TryParse(txtNeighborhood.Text, out int neighborhood) ||
+                !int.TryParse(txtTime.Text, out int maxTime) ||
+                !int.TryParse(txtSeed.Text, out int seed))
+            {
+                MessageBox.Show("Podaj wartoœci liczbowe!");
+                return;
+            }
+
+
+
+            int[,] matrix = GetMatrixFromGrid();
+
+            var tabu = new TabuSearch();
+
+            var result = await Task.Run(() =>
+                tabu.Run(matrix, iterations, tabuLength, neighborhood, seed, maxTime)
+            );
+
+            ShowSolution(result, matrix);
+            tabControl1.SelectedTab = tabPage3;
         }
     }
 }

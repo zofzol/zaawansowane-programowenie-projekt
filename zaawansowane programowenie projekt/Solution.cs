@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace zaawansowane_programowenie_projekt
 {
-    internal class Solution
+    public class Solution
     {
+        public int[] Permutation { get; set; }
+        public int Cost { get; set; }
+        public int IterationFound { get; set; }
+        public TimeSpan Time { get; set; }
     }
 }

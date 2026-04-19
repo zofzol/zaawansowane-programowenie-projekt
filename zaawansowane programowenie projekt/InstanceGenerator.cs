@@ -9,6 +9,7 @@ namespace zaawansowane_programowenie_projekt
     public class InstanceGenerator
     {
         private Random rand = new Random();
+        public int[,] Correct { get; private set; }
 
         public int[,] Generate(int m, int n, int errors)
         {
@@ -44,6 +45,8 @@ namespace zaawansowane_programowenie_projekt
                     shuffled[i, j] = matrix[i, perm[j]];
                 }
             }
+
+            Correct = (int[,])matrix.Clone();//bedzie przechowywachmacierz oryginalna przed wprowadzeniem bledow
 
             // wprowadzanie błędów
             for (int k = 0; k < errors; k++)
