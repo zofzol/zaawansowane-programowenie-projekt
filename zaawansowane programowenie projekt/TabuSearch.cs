@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static zaawansowane_programowenie_projekt.Form1;
 
 namespace zaawansowane_programowenie_projekt
 {
@@ -65,15 +66,10 @@ namespace zaawansowane_programowenie_projekt
 
                 for (int start = 0; start < n; start++)
                 {
-                    if (reordered[start] == 0) continue; //jezeli to jest 0 to start nie moze byc na tej pozycji
-                    if (start > 0 && reordered[start - 1] == 1) continue; //jedynka w ciagu nie bedzie lepsza
-
                     for (int end = start; end < n; end++)
                     {
-                        if (reordered[end] == 0) continue; //jak wyzej
-                        if (end < n - 1 && reordered[end + 1] == 1) continue;
-
                         int onesInWindow;
+
                         if (start > 0)
                         {
                             onesInWindow = pref[end] - pref[start - 1];
@@ -84,14 +80,16 @@ namespace zaawansowane_programowenie_projekt
                         }
 
                         int windowLength = end - start + 1;
-                        int currentErrors = (windowLength - onesInWindow) + (totalOnesinRow - onesInWindow);//0 w srodku + 1 poza
-                        
+
+                        int currentErrors =
+                            (windowLength - onesInWindow)
+                            + (totalOnesinRow - onesInWindow);
+
                         if (currentErrors < minRowError)
                         {
                             minRowError = currentErrors;
                         }
                     }
-
                 }
 
                 totalErrors += minRowError;
@@ -136,7 +134,11 @@ namespace zaawansowane_programowenie_projekt
             for (int iter = 0; iter < iterations; iter++)//dla iterations ilosci swapujemy
             {
                 int progress = (int)((iter / (double)iterations) * 100);
-                bw.ReportProgress(progress);
+                bw.ReportProgress(progress, new ProgressData
+                {
+                    Iteration = iter,
+                    Cost = bestCost
+                });
                 int bestMoveCost = int.MaxValue; //najmniejsza wartosc dla danej iteracji
                 (int, int) bestMove = (-1, -1); //kolumny do zamiany z najmniejszym bierzacym kosztem
                 int[]? nextBestPerm = null; //uklad kolumn po zamianie bestMove
@@ -150,7 +152,7 @@ namespace zaawansowane_programowenie_projekt
 
 
                     int[] candidate = Swap(current, i, j);
-                    int candidateCost = EvaluateHeuristic(matrix, candidate);
+                    int candidateCost = Evaluate(matrix, candidate);
                     bool isTabu = tabuQueue.Contains(move);
 
                     if (candidateCost < bestMoveCost && (!isTabu || candidateCost < bestCost))

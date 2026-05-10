@@ -51,8 +51,11 @@
             label5 = new Label();
             label4 = new Label();
             tabPage3 = new TabPage();
-            progressBar1 = new ProgressBar();
             lblStatus = new Label();
+            progressBar1 = new ProgressBar();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            textBox1 = new TextBox();
+            label9 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -289,6 +292,8 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(label9);
+            tabPage3.Controls.Add(textBox1);
             tabPage3.Controls.Add(lblStatus);
             tabPage3.Controls.Add(progressBar1);
             tabPage3.Location = new Point(4, 34);
@@ -298,13 +303,6 @@
             tabPage3.Text = "Solution";
             tabPage3.UseVisualStyleBackColor = true;
             // 
-            // progressBar1
-            // 
-            progressBar1.Location = new Point(15, 29);
-            progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(404, 34);
-            progressBar1.TabIndex = 0;
-            // 
             // lblStatus
             // 
             lblStatus.AutoSize = true;
@@ -312,6 +310,31 @@
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(0, 25);
             lblStatus.TabIndex = 1;
+            // 
+            // progressBar1
+            // 
+            progressBar1.Location = new Point(15, 29);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(404, 34);
+            progressBar1.TabIndex = 0;
+            progressBar1.Click += progressBar1_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(556, 29);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(150, 31);
+            textBox1.TabIndex = 2;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(556, 1);
+            label9.Name = "label9";
+            label9.Size = new Size(197, 25);
+            label9.TabIndex = 3;
+            label9.Text = "Evaluate function value:";
+            label9.Click += label9_Click;
             // 
             // Form1
             // 
@@ -361,5 +384,8 @@
         private TextBox txtIterations;
         private Label lblStatus;
         private ProgressBar progressBar1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private TextBox textBox1;
+        private Label label9;
     }
 }

@@ -1,11 +1,19 @@
 using System.ComponentModel;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace zaawansowane_programowenie_projekt
 {
     public partial class Form1 : Form
     {
 
+        public class ProgressData
+        {
+            public int Iteration { get; set; }
+            public int Cost { get; set; }
+        }
+
         private BackgroundWorker bw = new BackgroundWorker();
+        private Chart chart1 = new Chart();
         public Form1()
         {
             InitializeComponent();
@@ -26,11 +34,20 @@ namespace zaawansowane_programowenie_projekt
             txtErrors.Text = "0";
             txtIterations.Text = "1000";
             txtTabuLength.Text = "15";
-            txtNeighborhood.Text = "50"; 
-            txtTime.Text = "30";   
-            txtSeed.Text = "2137"; 
+            txtNeighborhood.Text = "50";
+            txtTime.Text = "30";
+            txtSeed.Text = "2137";
 
+            chart1.Parent = tabPage3;
+            chart1.Location = new Point(20, 80);
+            chart1.Size = new Size(500, 250);
+            chart1.ChartAreas.Add(new ChartArea());
 
+            Series series = new Series();
+            series.Name = "Cost";
+            series.ChartType = SeriesChartType.Line;
+
+            chart1.Series.Add(series);
         }
         private void Bw_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -52,8 +69,12 @@ namespace zaawansowane_programowenie_projekt
 
         private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            progressBar1.Value = e.ProgressPercentage;
-            lblStatus.Text = e.ProgressPercentage + "%";
+            progressBar1.Value = e.ProgressPercentage+1;
+            lblStatus.Text = e.ProgressPercentage+1 + "%";
+
+            var data = (ProgressData)e.UserState;
+            textBox1.Text= data.Cost.ToString();
+            chart1.Series["Cost"].Points.AddXY(data.Iteration, data.Cost);
         }
         private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -97,6 +118,8 @@ namespace zaawansowane_programowenie_projekt
                 {
                     dataGridView1[j, i].Value = matrix[i, j];
                 }
+                bw.WorkerReportsProgress = true;
+
             }
             SetSquareCells(30);
             ColorCells();
@@ -211,7 +234,7 @@ namespace zaawansowane_programowenie_projekt
         }
 
         private void ShowSolution(Solution sol, int[,] matrix)
-        { 
+        {
 
         }
 
@@ -230,6 +253,19 @@ namespace zaawansowane_programowenie_projekt
             int[,] matrix = GetMatrixFromGrid();
 
             bw.RunWorkerAsync(new object[] { matrix, iterations, tabuLength, neighborhood, seed, maxTime });
+
+            chart1.Series["Cost"].Points.Clear();
+            tabControl1.SelectedTab = tabPage3;
+        }
+
+        private void progressBar1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
