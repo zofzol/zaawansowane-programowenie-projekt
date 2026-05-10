@@ -120,6 +120,7 @@ namespace zaawansowane_programowenie_projekt
 
         public Solution Run(int[,] matrix, int iterations, int tabuLength, int neighborhood, int seed, int maxTime, BackgroundWorker bw)
         {
+            
             int n = matrix.GetLength(1);
             Random rand = new Random(seed);
 
@@ -133,6 +134,14 @@ namespace zaawansowane_programowenie_projekt
 
             for (int iter = 0; iter < iterations; iter++)//dla iterations ilosci swapujemy
             {
+                if (bw.CancellationPending)
+                {
+                    return new Solution
+                    {
+                        Permutation = bestSolution,
+                        Cost = bestCost
+                    };
+                }
                 int progress = (int)((iter / (double)iterations) * 100);
                 bw.ReportProgress(progress, new ProgressData
                 {

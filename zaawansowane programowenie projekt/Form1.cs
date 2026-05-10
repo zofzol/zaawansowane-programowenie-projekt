@@ -14,6 +14,7 @@ namespace zaawansowane_programowenie_projekt
 
         private BackgroundWorker bw = new BackgroundWorker();
         private Chart chart1 = new Chart();
+        private int[,] lastShuffledMatrix;
         public Form1()
         {
             InitializeComponent();
@@ -43,13 +44,18 @@ namespace zaawansowane_programowenie_projekt
             chart1.Size = new Size(500, 250);
             chart1.ChartAreas.Add(new ChartArea());
 
+            chart1.Parent = tabPage3;
+            chart1.Location = new Point(20, 80);
+            chart1.Size = new Size(750, 400);
+            chart1.ChartAreas.Add(new ChartArea());
+
             Series series = new Series();
             series.Name = "Cost";
             series.ChartType = SeriesChartType.Line;
 
             chart1.Series.Add(series);
         }
-        private void Bw_DoWork(object sender, DoWorkEventArgs e)
+        private void Bw_DoWork(object? sender, DoWorkEventArgs e)
         {
             var args = (object[])e.Argument;
 
@@ -66,8 +72,7 @@ namespace zaawansowane_programowenie_projekt
 
             e.Result = result;
         }
-
-        private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Bw_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage+1;
             lblStatus.Text = e.ProgressPercentage+1 + "%";
@@ -76,15 +81,16 @@ namespace zaawansowane_programowenie_projekt
             textBox1.Text= data.Cost.ToString();
             chart1.Series["Cost"].Points.AddXY(data.Iteration, data.Cost);
         }
-        private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void Bw_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
+
             var result = (Solution)e.Result;
 
-            int[,] matrix = GetMatrixFromGrid();
+            //int[,] matrix = GetMatrixFromGrid();
 
-            ShowSolution(result, matrix);
+            ShowSolution(result, lastShuffledMatrix);
 
-            tabControl1.SelectedTab = tabPage3;
+            tabControl1.SelectedTab = tabPage4;
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -100,7 +106,9 @@ namespace zaawansowane_programowenie_projekt
             }
 
             var generator = new InstanceGenerator();
+            //zwraca macierz przed mieszaniem
             var matrix = generator.Generate(m, n, errors);
+
             DisplayMatrix(matrix);
         }
 
@@ -235,7 +243,44 @@ namespace zaawansowane_programowenie_projekt
 
         private void ShowSolution(Solution sol, int[,] matrix)
         {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
 
+            dataGridViewResult.RowCount = rows;
+            dataGridViewResult.ColumnCount = cols;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    int originalCol = sol.Permutation[j];
+
+                    int value = matrix[i, originalCol];
+
+                    dataGridViewResult[j, i].Value = value;
+
+                    if (value == 1)
+                        dataGridViewResult[j, i].Style.BackColor = Color.LightPink;
+                    else
+                        dataGridViewResult[j, i].Style.BackColor =
+                            ColorTranslator.FromHtml("#d3e171");
+                }
+            }
+
+            lblFinalCost.Text = "Final cost: " + sol.Cost;
+
+            lblPermutation.Text =
+                string.Join(", ", sol.Permutation);
+
+            // kwadratowe komórki
+            foreach (DataGridViewColumn col in dataGridViewResult.Columns)
+                col.Width = 30;
+
+            foreach (DataGridViewRow row in dataGridViewResult.Rows)
+                row.Height = 30;
+
+            dataGridViewResult.DefaultCellStyle.Alignment =
+                DataGridViewContentAlignment.MiddleCenter;
         }
 
         private void btnCompute_Click(object sender, EventArgs e)
@@ -250,12 +295,44 @@ namespace zaawansowane_programowenie_projekt
                 return;
             }
 
-            int[,] matrix = GetMatrixFromGrid();
+            //pobranie macierzy po edycji
+            int[,] userMatrix = GetMatrixFromGrid();
 
-            bw.RunWorkerAsync(new object[] { matrix, iterations, tabuLength, neighborhood, seed, maxTime });
+            //mieszanie kolumn przed taboo
+            lastShuffledMatrix = ShuffleColumns(userMatrix, seed);
+
+            //przemieszana macierz trafia do BackgroundWorkera
+            bw.RunWorkerAsync(new object[] { lastShuffledMatrix, iterations, tabuLength, neighborhood, seed, maxTime });
 
             chart1.Series["Cost"].Points.Clear();
             tabControl1.SelectedTab = tabPage3;
+        }
+
+        private int[,] ShuffleColumns(int[,] matrix, int seed)
+        {
+            int m = matrix.GetLength(0);
+            int n = matrix.GetLength(1);
+            Random localRand = new Random(seed);
+
+            int[] perm = Enumerable.Range(0, n).ToArray();
+
+            for (int i = 0; i < n; i++)
+            {
+                int j = localRand.Next(i, n);
+                (perm[i], perm[j]) = (perm[j], perm[i]);
+            }
+
+            int[,] shuffled = new int[m, n];
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    shuffled[i, j] = matrix[i, perm[j]];
+                }
+            }
+
+            return shuffled;
         }
 
         private void progressBar1_Click(object sender, EventArgs e)
@@ -266,6 +343,24 @@ namespace zaawansowane_programowenie_projekt
         private void label9_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            if (bw.IsBusy)
+            {
+                bw.CancelAsync();
+            }
         }
     }
 }

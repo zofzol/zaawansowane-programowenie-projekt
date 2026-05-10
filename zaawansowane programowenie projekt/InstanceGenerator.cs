@@ -27,44 +27,81 @@ namespace zaawansowane_programowenie_projekt
                 }
             }
 
-            // mieszu mieszu sla kolumn
-            int[] perm = Enumerable.Range(0, n).ToArray();
-
-            for (int i = 0; i < n; i++)
-            {
-                int j = rand.Next(i, n);
-                (perm[i], perm[j]) = (perm[j], perm[i]);
-            }
-
-            int[,] shuffled = new int[m, n];
-
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    shuffled[i, j] = matrix[i, perm[j]];
-                }
-            }
-
             Correct = (int[,])matrix.Clone();//bedzie przechowywachmacierz oryginalna przed wprowadzeniem bledow
 
             // wprowadzanie błędów
-            for (int k = 0; k < errors; k++)
-            {
-                int i = rand.Next(m);
-                int j = rand.Next(n);
+            int addedErrors = 0;
 
-                if (shuffled[i, j] == 1)
+            int maxAttempts = errors * 100;
+            int attempts = 0;
+
+            while (addedErrors < errors)
+            {
+                attempts++;
+                int row = rand.Next(0, m);
+                int col = rand.Next(0, n);
+
+                if (TryAddError(matrix, row, col, n))
                 {
-                    shuffled[i, j] = 0;
-                }
-                else
-                {
-                    shuffled[i, j] = 1;
+                    addedErrors++;
                 }
             }
 
-            return shuffled;
+
+            // mieszu mieszu sla kolumn
+            // int[] perm = Enumerable.Range(0, n).ToArray();
+            //
+            // for (int i = 0; i < n; i++)
+            // {
+            //     int j = rand.Next(i, n);
+            //     (perm[i], perm[j]) = (perm[j], perm[i]);
+            // }
+            //
+            // int[,] shuffled = new int[m, n];
+            //
+            // for (int i = 0; i < m; i++)
+            // {
+            //     for (int j = 0; j < n; j++)
+            //     {
+            //         shuffled[i, j] = matrix[i, perm[j]];
+            //     }
+            // }
+            //
+            //return shuffled;
+            return matrix;
+        }
+
+        private bool TryAddError(int[,] matrix, int row, int col, int maxCols)
+        {
+            int currentValue = matrix[row, col];
+
+            //sprawdzenie sasiadow
+            bool hasLeftNeighbor = col > 0;
+            bool hasRightNeighbor = col < maxCols - 1;
+
+            int leftVal = hasLeftNeighbor ? matrix[row, col - 1] : -1;
+            int rightVal = hasRightNeighbor ? matrix[row, col + 1] : -1;
+
+            //0-> tylko jesli nie brzegowre
+            if (currentValue == 0)
+            {
+                if (leftVal == 1 || rightVal == 1)
+                {
+                    return false; 
+                }
+            }
+            // analogicznie dla 1
+            else if (currentValue == 1)
+            {
+                if (leftVal != 1 || rightVal != 1)
+                {
+                    return false; 
+                }
+            }
+
+            //zmiana bitu
+            matrix[row, col] = 1 - currentValue;
+            return true;
         }
     }
 }

@@ -51,16 +51,25 @@
             label5 = new Label();
             label4 = new Label();
             tabPage3 = new TabPage();
+            btnStop = new Button();
+            label9 = new Label();
+            textBox1 = new TextBox();
             lblStatus = new Label();
             progressBar1 = new ProgressBar();
+            tabPage4 = new TabPage();
+            lblPermutation = new Label();
+            lblFinalCost = new Label();
+            label11 = new Label();
+            label10 = new Label();
+            dataGridViewResult = new DataGridView();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            textBox1 = new TextBox();
-            label9 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
+            tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewResult).BeginInit();
             SuspendLayout();
             // 
             // txtRows
@@ -147,9 +156,11 @@
             // 
             // tabControl1
             // 
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
+            tabControl1.Controls.Add(tabPage4);
             tabControl1.Location = new Point(3, 3);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -292,6 +303,7 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(btnStop);
             tabPage3.Controls.Add(label9);
             tabPage3.Controls.Add(textBox1);
             tabPage3.Controls.Add(lblStatus);
@@ -303,21 +315,27 @@
             tabPage3.Text = "Solution";
             tabPage3.UseVisualStyleBackColor = true;
             // 
-            // lblStatus
+            // btnStop
             // 
-            lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(425, 38);
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(0, 25);
-            lblStatus.TabIndex = 1;
+            btnStop.AutoEllipsis = true;
+            btnStop.BackColor = Color.FromArgb(255, 192, 255);
+            btnStop.Location = new Point(825, 372);
+            btnStop.Name = "btnStop";
+            btnStop.Size = new Size(176, 99);
+            btnStop.TabIndex = 7;
+            btnStop.Text = "STOP";
+            btnStop.UseVisualStyleBackColor = false;
+            btnStop.Click += btnStop_Click;
             // 
-            // progressBar1
+            // label9
             // 
-            progressBar1.Location = new Point(15, 29);
-            progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(404, 34);
-            progressBar1.TabIndex = 0;
-            progressBar1.Click += progressBar1_Click;
+            label9.AutoSize = true;
+            label9.Location = new Point(556, 1);
+            label9.Name = "label9";
+            label9.Size = new Size(197, 25);
+            label9.TabIndex = 3;
+            label9.Text = "Evaluate function value:";
+            label9.Click += label9_Click;
             // 
             // textBox1
             // 
@@ -335,6 +353,74 @@
             label9.TabIndex = 3;
             label9.Text = "Evaluate function value:";
             label9.Click += label9_Click;
+            // 
+            // progressBar1
+            // 
+            progressBar1.Location = new Point(15, 29);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(404, 34);
+            progressBar1.TabIndex = 0;
+            progressBar1.Click += progressBar1_Click;
+            // 
+            // tabPage4
+            // 
+            tabPage4.Controls.Add(lblPermutation);
+            tabPage4.Controls.Add(lblFinalCost);
+            tabPage4.Controls.Add(label11);
+            tabPage4.Controls.Add(label10);
+            tabPage4.Controls.Add(dataGridViewResult);
+            tabPage4.Location = new Point(4, 34);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Padding = new Padding(3);
+            tabPage4.Size = new Size(1016, 487);
+            tabPage4.TabIndex = 3;
+            tabPage4.Text = "Results";
+            tabPage4.UseVisualStyleBackColor = true;
+            tabPage4.Click += tabPage4_Click;
+            // 
+            // lblPermutation
+            // 
+            lblPermutation.Location = new Point(5, 124);
+            lblPermutation.Name = "lblPermutation";
+            lblPermutation.Size = new Size(350, 350);
+            lblPermutation.TabIndex = 9;
+            // 
+            // lblFinalCost
+            // 
+            lblFinalCost.AutoSize = true;
+            lblFinalCost.Location = new Point(6, 31);
+            lblFinalCost.Name = "lblFinalCost";
+            lblFinalCost.Size = new Size(0, 25);
+            lblFinalCost.TabIndex = 8;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(6, 99);
+            label11.Name = "label11";
+            label11.Size = new Size(112, 25);
+            label11.TabIndex = 7;
+            label11.Text = "Permutation:";
+            label11.Click += label11_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(6, 6);
+            label10.Name = "label10";
+            label10.Size = new Size(197, 25);
+            label10.TabIndex = 4;
+            label10.Text = "Evaluate function value:";
+            // 
+            // dataGridViewResult
+            // 
+            dataGridViewResult.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewResult.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewResult.Location = new Point(361, 6);
+            dataGridViewResult.Name = "dataGridViewResult";
+            dataGridViewResult.RowHeadersWidth = 62;
+            dataGridViewResult.Size = new Size(649, 475);
+            dataGridViewResult.TabIndex = 0;
             // 
             // Form1
             // 
@@ -354,6 +440,9 @@
             tabPage2.PerformLayout();
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
+            tabPage4.ResumeLayout(false);
+            tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewResult).EndInit();
             ResumeLayout(false);
         }
 
@@ -387,5 +476,13 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private TextBox textBox1;
         private Label label9;
+        private TabPage tabPage4;
+        private Label label11;
+        private TextBox textBox3;
+        private Label label10;
+        private DataGridView dataGridViewResult;
+        private Label lblFinalCost;
+        private Label lblPermutation;
+        private Button btnStop;
     }
 }
