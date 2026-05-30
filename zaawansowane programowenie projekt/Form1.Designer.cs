@@ -57,6 +57,8 @@
             lblStatus = new Label();
             progressBar1 = new ProgressBar();
             tabPage4 = new TabPage();
+            lblTime = new Label();
+            label12 = new Label();
             lblPermutation = new Label();
             lblFinalCost = new Label();
             label11 = new Label();
@@ -344,15 +346,12 @@
             textBox1.Size = new Size(150, 31);
             textBox1.TabIndex = 2;
             // 
-            // label9
+            // lblStatus
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(556, 1);
-            label9.Name = "label9";
-            label9.Size = new Size(197, 25);
-            label9.TabIndex = 3;
-            label9.Text = "Evaluate function value:";
-            label9.Click += label9_Click;
+            lblStatus.Location = new Point(425, 37);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(100, 23);
+            lblStatus.TabIndex = 8;
             // 
             // progressBar1
             // 
@@ -364,6 +363,8 @@
             // 
             // tabPage4
             // 
+            tabPage4.Controls.Add(lblTime);
+            tabPage4.Controls.Add(label12);
             tabPage4.Controls.Add(lblPermutation);
             tabPage4.Controls.Add(lblFinalCost);
             tabPage4.Controls.Add(label11);
@@ -378,9 +379,26 @@
             tabPage4.UseVisualStyleBackColor = true;
             tabPage4.Click += tabPage4_Click;
             // 
+            // lblTime
+            // 
+            lblTime.AutoSize = true;
+            lblTime.Location = new Point(6, 109);
+            lblTime.Name = "lblTime";
+            lblTime.Size = new Size(0, 25);
+            lblTime.TabIndex = 11;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 84);
+            label12.Name = "label12";
+            label12.Size = new Size(54, 25);
+            label12.TabIndex = 10;
+            label12.Text = "Time:";
+            // 
             // lblPermutation
             // 
-            lblPermutation.Location = new Point(5, 124);
+            lblPermutation.Location = new Point(6, 174);
             lblPermutation.Name = "lblPermutation";
             lblPermutation.Size = new Size(350, 350);
             lblPermutation.TabIndex = 9;
@@ -396,7 +414,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(6, 99);
+            label11.Location = new Point(6, 149);
             label11.Name = "label11";
             label11.Size = new Size(112, 25);
             label11.TabIndex = 7;
@@ -418,6 +436,7 @@
             dataGridViewResult.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewResult.Location = new Point(361, 6);
             dataGridViewResult.Name = "dataGridViewResult";
+            dataGridViewResult.RowHeadersVisible = false;
             dataGridViewResult.RowHeadersWidth = 62;
             dataGridViewResult.Size = new Size(649, 475);
             dataGridViewResult.TabIndex = 0;
@@ -484,5 +503,7 @@
         private Label lblFinalCost;
         private Label lblPermutation;
         private Button btnStop;
+        private Label lblTime;
+        private Label label12;
     }
 }

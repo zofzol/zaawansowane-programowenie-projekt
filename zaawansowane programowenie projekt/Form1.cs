@@ -39,15 +39,18 @@ namespace zaawansowane_programowenie_projekt
             txtTime.Text = "30";
             txtSeed.Text = "2137";
 
-            chart1.Parent = tabPage3;
-            chart1.Location = new Point(20, 80);
-            chart1.Size = new Size(500, 250);
-            chart1.ChartAreas.Add(new ChartArea());
+            //chart1.Parent = tabPage3;
+            //chart1.Location = new Point(20, 80);
+            //chart1.Size = new Size(500, 250);
+            //chart1.ChartAreas.Add(new ChartArea());
 
             chart1.Parent = tabPage3;
             chart1.Location = new Point(20, 80);
             chart1.Size = new Size(750, 400);
             chart1.ChartAreas.Add(new ChartArea());
+
+            chart1.ChartAreas[0].AxisX.Minimum = 0; //start  osi x od 0
+            chart1.ChartAreas[0].AxisX.IsMarginVisible = false;
 
             Series series = new Series();
             series.Name = "Cost";
@@ -105,7 +108,16 @@ namespace zaawansowane_programowenie_projekt
                 return;
             }
 
+            //ilosc mozliwych przesuniec dla shift
+            int totalPossibleMoves = n * (n - 1);
+
+            //okolo 30% 
+            int dynamicNeighborhood = Math.Max(20, totalPossibleMoves / 3);
+            //nadpisanie wartosci
+            txtNeighborhood.Text = dynamicNeighborhood.ToString();
+
             var generator = new InstanceGenerator();
+
             //zwraca macierz przed mieszaniem
             var matrix = generator.Generate(m, n, errors);
 
@@ -268,6 +280,8 @@ namespace zaawansowane_programowenie_projekt
             }
 
             lblFinalCost.Text = "Final cost: " + sol.Cost;
+
+            lblTime.Text = $"{sol.ExecutionTime.TotalSeconds:F2} s";
 
             lblPermutation.Text =
                 string.Join(", ", sol.Permutation);

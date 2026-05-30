@@ -11,6 +11,6 @@ namespace zaawansowane_programowenie_projekt
         public int[] Permutation { get; set; }
         public int Cost { get; set; }
         public int IterationFound { get; set; }
-        public TimeSpan Time { get; set; }
+        public TimeSpan ExecutionTime { get; set; }
     }
 }
