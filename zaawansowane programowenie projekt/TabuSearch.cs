@@ -139,7 +139,7 @@ namespace zaawansowane_programowenie_projekt
             newPerm[to] = temp;
             return newPerm;
         }
-        public Solution Run(int[,] matrix, int iterations, int tabuLength, int neighborhood, int seed, int maxTime, BackgroundWorker bw)
+        public Solution Run(int[,] matrix, int iterations, int tabuLength, int neighborhood, int seed, BackgroundWorker bw)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();

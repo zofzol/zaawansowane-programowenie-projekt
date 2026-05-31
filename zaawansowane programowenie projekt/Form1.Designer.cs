@@ -38,14 +38,13 @@
             dataGridView1 = new DataGridView();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnGenEmpty = new Button();
             tabPage2 = new TabPage();
             btnCompute = new Button();
             txtTabuLength = new TextBox();
             txtNeighborhood = new TextBox();
             txtSeed = new TextBox();
-            txtTime = new TextBox();
             txtIterations = new TextBox();
-            label8 = new Label();
             label7 = new Label();
             label6 = new Label();
             label5 = new Label();
@@ -65,7 +64,6 @@
             label10 = new Label();
             dataGridViewResult = new DataGridView();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            btnGenEmpty = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -190,15 +188,25 @@
             tabPage1.UseVisualStyleBackColor = true;
             tabPage1.Click += tabPage1_Click;
             // 
+            // btnGenEmpty
+            // 
+            btnGenEmpty.AutoEllipsis = true;
+            btnGenEmpty.BackColor = Color.FromArgb(255, 192, 255);
+            btnGenEmpty.Location = new Point(32, 233);
+            btnGenEmpty.Name = "btnGenEmpty";
+            btnGenEmpty.Size = new Size(176, 99);
+            btnGenEmpty.TabIndex = 8;
+            btnGenEmpty.Text = "GENERATE EMPTY";
+            btnGenEmpty.UseVisualStyleBackColor = false;
+            btnGenEmpty.Click += btnGenEmpty_Click;
+            // 
             // tabPage2
             // 
             tabPage2.Controls.Add(btnCompute);
             tabPage2.Controls.Add(txtTabuLength);
             tabPage2.Controls.Add(txtNeighborhood);
             tabPage2.Controls.Add(txtSeed);
-            tabPage2.Controls.Add(txtTime);
             tabPage2.Controls.Add(txtIterations);
-            tabPage2.Controls.Add(label8);
             tabPage2.Controls.Add(label7);
             tabPage2.Controls.Add(label6);
             tabPage2.Controls.Add(label5);
@@ -244,29 +252,12 @@
             txtSeed.Size = new Size(150, 31);
             txtSeed.TabIndex = 7;
             // 
-            // txtTime
-            // 
-            txtTime.Location = new Point(17, 358);
-            txtTime.Name = "txtTime";
-            txtTime.Size = new Size(150, 31);
-            txtTime.TabIndex = 6;
-            // 
             // txtIterations
             // 
             txtIterations.Location = new Point(17, 45);
             txtIterations.Name = "txtIterations";
             txtIterations.Size = new Size(150, 31);
             txtIterations.TabIndex = 5;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(17, 330);
-            label8.Name = "label8";
-            label8.Size = new Size(89, 25);
-            label8.TabIndex = 4;
-            label8.Text = "Max time:";
-            label8.Click += label8_Click;
             // 
             // label7
             // 
@@ -436,24 +427,13 @@
             // 
             dataGridViewResult.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridViewResult.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewResult.ColumnHeadersVisible = false;
             dataGridViewResult.Location = new Point(361, 6);
             dataGridViewResult.Name = "dataGridViewResult";
             dataGridViewResult.RowHeadersVisible = false;
             dataGridViewResult.RowHeadersWidth = 62;
             dataGridViewResult.Size = new Size(649, 475);
             dataGridViewResult.TabIndex = 0;
-            // 
-            // btnGenEmpty
-            // 
-            btnGenEmpty.AutoEllipsis = true;
-            btnGenEmpty.BackColor = Color.FromArgb(255, 192, 255);
-            btnGenEmpty.Location = new Point(32, 233);
-            btnGenEmpty.Name = "btnGenEmpty";
-            btnGenEmpty.Size = new Size(176, 99);
-            btnGenEmpty.TabIndex = 8;
-            btnGenEmpty.Text = "GENERATE EMPTY";
-            btnGenEmpty.UseVisualStyleBackColor = false;
-            btnGenEmpty.Click += btnGenEmpty_Click;
             // 
             // Form1
             // 
@@ -496,13 +476,11 @@
         private Label label4;
         private Label label6;
         private Label label5;
-        private Label label8;
         private Label label7;
         private Button btnCompute;
         private TextBox txtTabuLength;
         private TextBox txtNeighborhood;
         private TextBox txtSeed;
-        private TextBox txtTime;
         private TextBox txtIterations;
         private Label lblStatus;
         private ProgressBar progressBar1;

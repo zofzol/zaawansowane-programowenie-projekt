@@ -36,7 +36,7 @@ namespace zaawansowane_programowenie_projekt
             txtIterations.Text = "1000";
             txtTabuLength.Text = "15";
             txtNeighborhood.Text = "50";
-            txtTime.Text = "30";
+            //txtTime.Text = "30";
             txtSeed.Text = "2137";
 
             //chart1.Parent = tabPage3;
@@ -67,11 +67,11 @@ namespace zaawansowane_programowenie_projekt
             int tabuLength = (int)args[2];
             int neighborhood = (int)args[3];
             int seed = (int)args[4];
-            int maxTime = (int)args[5];
+            //int maxTime = (int)args[5];
 
             var tabu = new TabuSearch();
 
-            var result = tabu.Run(matrix, iterations, tabuLength, neighborhood, seed, maxTime, (BackgroundWorker)sender);
+            var result = tabu.Run(matrix, iterations, tabuLength, neighborhood, seed, (BackgroundWorker)sender);
 
             e.Result = result;
         }
@@ -302,7 +302,7 @@ namespace zaawansowane_programowenie_projekt
             if (!int.TryParse(txtIterations.Text, out int iterations) ||
                 !int.TryParse(txtTabuLength.Text, out int tabuLength) ||
                 !int.TryParse(txtNeighborhood.Text, out int neighborhood) ||
-                !int.TryParse(txtTime.Text, out int maxTime) ||
+                //!int.TryParse(txtTime.Text, out int maxTime) ||
                 !int.TryParse(txtSeed.Text, out int seed))
             {
                 MessageBox.Show("Podaj wartoœci liczbowe!");
@@ -316,7 +316,7 @@ namespace zaawansowane_programowenie_projekt
             lastShuffledMatrix = ShuffleColumns(userMatrix, seed);
 
             //przemieszana macierz trafia do BackgroundWorkera
-            bw.RunWorkerAsync(new object[] { lastShuffledMatrix, iterations, tabuLength, neighborhood, seed, maxTime });
+            bw.RunWorkerAsync(new object[] { lastShuffledMatrix, iterations, tabuLength, neighborhood, seed});
 
             chart1.Series["Cost"].Points.Clear();
             tabControl1.SelectedTab = tabPage3;
