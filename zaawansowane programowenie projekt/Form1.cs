@@ -376,5 +376,29 @@ namespace zaawansowane_programowenie_projekt
                 bw.CancelAsync();
             }
         }
+
+        private void btnGenEmpty_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(txtRows.Text, out int m) || !int.TryParse(txtCols.Text, out int n) || !int.TryParse(txtErrors.Text, out int errors))
+            {
+                MessageBox.Show("Podaj wartoœæ liczbow¹!");
+                return;
+            }
+
+            //ilosc mozliwych przesuniec dla shift
+            int totalPossibleMoves = n * (n - 1);
+
+            //okolo 30% 
+            int dynamicNeighborhood = Math.Max(20, totalPossibleMoves / 3);
+            //nadpisanie wartosci
+            txtNeighborhood.Text = dynamicNeighborhood.ToString();
+
+            var generator = new InstanceGenerator();
+
+            //zwraca macierz przed mieszaniem
+            var matrix = new int[m, n];
+
+            DisplayMatrix(matrix);
+        }
     }
 }

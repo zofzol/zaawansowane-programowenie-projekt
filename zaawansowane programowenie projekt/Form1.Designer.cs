@@ -65,6 +65,7 @@
             label10 = new Label();
             dataGridViewResult = new DataGridView();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            btnGenEmpty = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -171,6 +172,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(btnGenEmpty);
             tabPage1.Controls.Add(label1);
             tabPage1.Controls.Add(dataGridView1);
             tabPage1.Controls.Add(txtRows);
@@ -441,6 +443,18 @@
             dataGridViewResult.Size = new Size(649, 475);
             dataGridViewResult.TabIndex = 0;
             // 
+            // btnGenEmpty
+            // 
+            btnGenEmpty.AutoEllipsis = true;
+            btnGenEmpty.BackColor = Color.FromArgb(255, 192, 255);
+            btnGenEmpty.Location = new Point(32, 233);
+            btnGenEmpty.Name = "btnGenEmpty";
+            btnGenEmpty.Size = new Size(176, 99);
+            btnGenEmpty.TabIndex = 8;
+            btnGenEmpty.Text = "GENERATE EMPTY";
+            btnGenEmpty.UseVisualStyleBackColor = false;
+            btnGenEmpty.Click += btnGenEmpty_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -505,5 +519,6 @@
         private Button btnStop;
         private Label lblTime;
         private Label label12;
+        private Button btnGenEmpty;
     }
 }
