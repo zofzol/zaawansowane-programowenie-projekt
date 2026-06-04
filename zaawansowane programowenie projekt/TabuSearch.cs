@@ -139,7 +139,7 @@ namespace zaawansowane_programowenie_projekt
             newPerm[to] = temp;
             return newPerm;
         }
-        public Solution Run(int[,] matrix, int iterations, int tabuLength, int neighborhood, int seed, BackgroundWorker bw)
+        public Solution Run(int[,] matrix, int iterations, int tabuLength, int neighborhood, int seed, int maxStagnation, BackgroundWorker bw)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -158,7 +158,7 @@ namespace zaawansowane_programowenie_projekt
             int[,] tabuTenure = new int[n, n];
 
             int noImprovementCount = 0; //ucieczka mode
-            int maxStagnation = 50;
+            //int maxStagnation = 50;
 
             for (int iter = 0; iter < iterations; iter++)
             {

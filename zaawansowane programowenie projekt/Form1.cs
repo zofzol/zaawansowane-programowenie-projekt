@@ -35,9 +35,10 @@ namespace zaawansowane_programowenie_projekt
             txtErrors.Text = "0";
             txtIterations.Text = "1000";
             txtTabuLength.Text = "15";
+            txtMaxStagnation.Text = "50";
             txtNeighborhood.Text = "50";
             //txtTime.Text = "30";
-            txtSeed.Text = "2137";
+            txtSeed.Text = "67";
 
             //chart1.Parent = tabPage3;
             //chart1.Location = new Point(20, 80);
@@ -57,6 +58,12 @@ namespace zaawansowane_programowenie_projekt
             series.ChartType = SeriesChartType.Line;
 
             chart1.Series.Add(series);
+
+            chart1.ChartAreas[0].AxisX.Title = "Number of Iterations";
+            chart1.ChartAreas[0].AxisY.Title = "Cost Function Value";
+            Font axisTitleFont = new Font("Arial", 10, FontStyle.Bold);
+            chart1.ChartAreas[0].AxisX.TitleFont = axisTitleFont;
+            chart1.ChartAreas[0].AxisY.TitleFont = axisTitleFont;
         }
         private void Bw_DoWork(object? sender, DoWorkEventArgs e)
         {
@@ -67,12 +74,12 @@ namespace zaawansowane_programowenie_projekt
             int tabuLength = (int)args[2];
             int neighborhood = (int)args[3];
             int seed = (int)args[4];
+            int maxStagnation = (int)args[5];
             //int maxTime = (int)args[5];
 
             var tabu = new TabuSearch();
 
-            var result = tabu.Run(matrix, iterations, tabuLength, neighborhood, seed, (BackgroundWorker)sender);
-
+            var result = tabu.Run(matrix, iterations, tabuLength, neighborhood, seed, maxStagnation, (BackgroundWorker)sender);
             e.Result = result;
         }
         private void Bw_ProgressChanged(object? sender, ProgressChangedEventArgs e)
@@ -302,6 +309,7 @@ namespace zaawansowane_programowenie_projekt
             if (!int.TryParse(txtIterations.Text, out int iterations) ||
                 !int.TryParse(txtTabuLength.Text, out int tabuLength) ||
                 !int.TryParse(txtNeighborhood.Text, out int neighborhood) ||
+                !int.TryParse(txtMaxStagnation.Text, out int maxStagnation) ||
                 //!int.TryParse(txtTime.Text, out int maxTime) ||
                 !int.TryParse(txtSeed.Text, out int seed))
             {
@@ -316,7 +324,7 @@ namespace zaawansowane_programowenie_projekt
             lastShuffledMatrix = ShuffleColumns(userMatrix, seed);
 
             //przemieszana macierz trafia do BackgroundWorkera
-            bw.RunWorkerAsync(new object[] { lastShuffledMatrix, iterations, tabuLength, neighborhood, seed});
+            bw.RunWorkerAsync(new object[] { lastShuffledMatrix, iterations, tabuLength, neighborhood, seed, maxStagnation });
 
             chart1.Series["Cost"].Points.Clear();
             tabControl1.SelectedTab = tabPage3;
@@ -399,6 +407,11 @@ namespace zaawansowane_programowenie_projekt
             var matrix = new int[m, n];
 
             DisplayMatrix(matrix);
+        }
+
+        private void txtMaxStagnation_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

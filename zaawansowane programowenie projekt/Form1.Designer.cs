@@ -40,6 +40,8 @@
             tabPage1 = new TabPage();
             btnGenEmpty = new Button();
             tabPage2 = new TabPage();
+            txtMaxStagnation = new TextBox();
+            label8 = new Label();
             btnCompute = new Button();
             txtTabuLength = new TextBox();
             txtNeighborhood = new TextBox();
@@ -202,6 +204,8 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(txtMaxStagnation);
+            tabPage2.Controls.Add(label8);
             tabPage2.Controls.Add(btnCompute);
             tabPage2.Controls.Add(txtTabuLength);
             tabPage2.Controls.Add(txtNeighborhood);
@@ -218,6 +222,23 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Tabu Search";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // txtMaxStagnation
+            // 
+            txtMaxStagnation.Location = new Point(17, 268);
+            txtMaxStagnation.Name = "txtMaxStagnation";
+            txtMaxStagnation.Size = new Size(150, 31);
+            txtMaxStagnation.TabIndex = 12;
+            txtMaxStagnation.TextChanged += txtMaxStagnation_TextChanged;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(17, 245);
+            label8.Name = "label8";
+            label8.Size = new Size(138, 25);
+            label8.TabIndex = 11;
+            label8.Text = "Max stagnation:";
             // 
             // btnCompute
             // 
@@ -247,7 +268,7 @@
             // 
             // txtSeed
             // 
-            txtSeed.Location = new Point(17, 274);
+            txtSeed.Location = new Point(17, 349);
             txtSeed.Name = "txtSeed";
             txtSeed.Size = new Size(150, 31);
             txtSeed.TabIndex = 7;
@@ -262,7 +283,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(17, 246);
+            label7.Location = new Point(17, 321);
             label7.Name = "label7";
             label7.Size = new Size(126, 25);
             label7.TabIndex = 3;
@@ -498,5 +519,7 @@
         private Label lblTime;
         private Label label12;
         private Button btnGenEmpty;
+        private TextBox txtMaxStagnation;
+        private Label label8;
     }
 }
