@@ -33,7 +33,7 @@ namespace zaawansowane_programowenie_projekt
             txtRows.Text = "5";
             txtCols.Text = "5";
             txtErrors.Text = "0";
-            txtIterations.Text = "1000";
+            txtIterations.Text = "500";
             txtTabuLength.Text = "15";
             txtMaxStagnation.Text = "50";
             txtNeighborhood.Text = "50";
@@ -118,10 +118,13 @@ namespace zaawansowane_programowenie_projekt
             //ilosc mozliwych przesuniec dla shift
             int totalPossibleMoves = n * (n - 1);
 
-            //okolo 30% 
-            int dynamicNeighborhood = Math.Max(20, totalPossibleMoves / 3);
+            //okolo 10% 
+            int dynamicNeighborhood = Math.Max(20, totalPossibleMoves / 10);
+            int dynamicTabu = Math.Max(20, n / 5);
+
             //nadpisanie wartosci
             txtNeighborhood.Text = dynamicNeighborhood.ToString();
+            txtTabuLength.Text = dynamicTabu.ToString();
 
             var generator = new InstanceGenerator();
 
@@ -323,7 +326,9 @@ namespace zaawansowane_programowenie_projekt
             //mieszanie kolumn przed taboo
             lastShuffledMatrix = ShuffleColumns(userMatrix, seed);
 
-            //przemieszana macierz trafia do BackgroundWorkera
+            //przemieszana macierz traf
+            //
+            //ia do BackgroundWorkera
             bw.RunWorkerAsync(new object[] { lastShuffledMatrix, iterations, tabuLength, neighborhood, seed, maxStagnation });
 
             chart1.Series["Cost"].Points.Clear();
@@ -396,10 +401,13 @@ namespace zaawansowane_programowenie_projekt
             //ilosc mozliwych przesuniec dla shift
             int totalPossibleMoves = n * (n - 1);
 
-            //okolo 30% 
-            int dynamicNeighborhood = Math.Max(20, totalPossibleMoves / 3);
+            //okolo 10% 
+            int dynamicNeighborhood = Math.Max(20, totalPossibleMoves / 10);
+            int dynamicTabu = Math.Max(20, n / 5);
+
             //nadpisanie wartosci
             txtNeighborhood.Text = dynamicNeighborhood.ToString();
+            txtTabuLength.Text = dynamicTabu.ToString();
 
             var generator = new InstanceGenerator();
 
