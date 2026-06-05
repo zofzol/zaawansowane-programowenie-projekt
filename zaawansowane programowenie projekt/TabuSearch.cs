@@ -12,45 +12,59 @@ namespace zaawansowane_programowenie_projekt
 {
     public class TabuSearch
     {
-       // private int EvaluateHeuristic(int[,] matrix, int[] permutation)
-       // {
-       //     int m = matrix.GetLength(0);
-       //     int n = matrix.GetLength(1);
-       //     int totalScore = 0;
-       //
-       //     for (int r = 0; r < m; r++)
-       //     {
-       //         int first = -1;
-       //         int last = -1;
-       //         int count = 0;
-       //
-       //         for (int c = 0; c < n; c++)
-       //         {
-       //             if (matrix[r, permutation[c]] == 1)
-       //             {
-       //                 if (first == -1) first = c;
-       //                 last = c;
-       //                 count++;
-       //             }
-       //         }
-       //
-       //         if (count > 0)
-       //         {
-       //             int holes = (last - first + 1) - count;
-       //             totalScore += holes;
-       //         }
-       //     }
-       //     return totalScore;
-       // }
-       //
+        // private int EvaluateHeuristic(int[,] matrix, int[] permutation)
+        // {
+        //     int m = matrix.GetLength(0);
+        //     int n = matrix.GetLength(1);
+        //     int totalScore = 0;
+        //
+        //     for (int r = 0; r < m; r++)
+        //     {
+        //         int first = -1;
+        //         int last = -1;
+        //         int count = 0;
+        //
+        //         for (int c = 0; c < n; c++)
+        //         {
+        //             if (matrix[r, permutation[c]] == 1)
+        //             {
+        //                 if (first == -1) first = c;
+        //                 last = c;
+        //                 count++;
+        //             }
+        //         }
+        //
+        //         if (count > 0)
+        //         {
+        //             int holes = (last - first + 1) - count;
+        //             totalScore += holes;
+        //         }
+        //     }
+        //     return totalScore;
+        // }
+        //
+        private int[] reordered;
+        private int[] pref;
         private int Evaluate(int[,] matrix, int[] permutation)
         {
             int m = matrix.GetLength(0);
             int n = matrix.GetLength(1);
             int totalErrors = 0;
 
-            int[] reordered = new int[n]; //aktualnie badany rzad
-            int[] pref = new int[n]; //ilosc jedynek miedzy poczatkiem wiersza a dana wartoscia
+            //int[] reordered = new int[n]; //aktualnie badany rzad
+            //int[] pref = new int[n]; //ilosc jedynek miedzy poczatkiem wiersza a dana wartoscia
+
+            for (int row = 0; row < m; row++)
+            {
+                int totalOnesinRow = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    reordered[i] = matrix[row, permutation[i]];
+                    totalOnesinRow += reordered[i];
+                    pref[i] = totalOnesinRow;
+                }
+
+            }
 
             for (int row = 0; row<m; row++)
             {
@@ -146,6 +160,9 @@ namespace zaawansowane_programowenie_projekt
 
             int n = matrix.GetLength(1);
             Random rand = new Random(seed);
+
+            reordered = new int[n];
+            pref = new int[n];
 
             int[] current = RandomPermutation(n, rand);
             int currentCost = Evaluate(matrix, current);

@@ -120,7 +120,7 @@ namespace zaawansowane_programowenie_projekt
 
             //okolo 10% 
             int dynamicNeighborhood = Math.Max(20, totalPossibleMoves / 10);
-            int dynamicTabu = Math.Max(20, n / 5);
+            int dynamicTabu = Math.Max(5, n / 5);
 
             //nadpisanie wartosci
             txtNeighborhood.Text = dynamicNeighborhood.ToString();
@@ -403,7 +403,7 @@ namespace zaawansowane_programowenie_projekt
 
             //okolo 10% 
             int dynamicNeighborhood = Math.Max(20, totalPossibleMoves / 10);
-            int dynamicTabu = Math.Max(20, n / 5);
+            int dynamicTabu = Math.Max(5, n / 5);
 
             //nadpisanie wartosci
             txtNeighborhood.Text = dynamicNeighborhood.ToString();
