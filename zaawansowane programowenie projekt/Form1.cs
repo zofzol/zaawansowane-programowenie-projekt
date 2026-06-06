@@ -109,9 +109,12 @@ namespace zaawansowane_programowenie_projekt
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(txtRows.Text, out int m) || !int.TryParse(txtCols.Text, out int n) || !int.TryParse(txtErrors.Text, out int errors))
+            if (!int.TryParse(txtRows.Text, out int m) ||
+                !int.TryParse(txtCols.Text, out int n) ||
+                !int.TryParse(txtErrors.Text, out int errors) ||
+                m < 0 || n < 0 || errors < 0)
             {
-                MessageBox.Show("Podaj wartoœæ liczbow¹!");
+                MessageBox.Show("Proszê podaæ poprawne, nieujemne wartoœci liczbowe we wszystkich polach.");
                 return;
             }
 
@@ -313,10 +316,10 @@ namespace zaawansowane_programowenie_projekt
                 !int.TryParse(txtTabuLength.Text, out int tabuLength) ||
                 !int.TryParse(txtNeighborhood.Text, out int neighborhood) ||
                 !int.TryParse(txtMaxStagnation.Text, out int maxStagnation) ||
-                //!int.TryParse(txtTime.Text, out int maxTime) ||
-                !int.TryParse(txtSeed.Text, out int seed))
+                !int.TryParse(txtSeed.Text, out int seed) ||
+                iterations < 0 || tabuLength < 0 || neighborhood < 0 || maxStagnation < 0 || seed < 0)
             {
-                MessageBox.Show("Podaj wartoœci liczbowe!");
+                MessageBox.Show("Proszê podaæ poprawne, nieujemne wartoœci liczbowe we wszystkich polach.");
                 return;
             }
 
@@ -392,9 +395,9 @@ namespace zaawansowane_programowenie_projekt
 
         private void btnGenEmpty_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(txtRows.Text, out int m) || !int.TryParse(txtCols.Text, out int n) || !int.TryParse(txtErrors.Text, out int errors))
+            if (!int.TryParse(txtRows.Text, out int m) || !int.TryParse(txtCols.Text, out int n) || !int.TryParse(txtErrors.Text, out int errors) || m < 0 || n < 0 || errors < 0)
             {
-                MessageBox.Show("Podaj wartoœæ liczbow¹!");
+                MessageBox.Show("Proszê podaæ poprawne, nieujemne wartoœci liczbowe we wszystkich polach.");
                 return;
             }
 
